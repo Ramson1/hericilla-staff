@@ -63,7 +63,7 @@ export default function StaffAttendancePage() {
     queryFn: async () => {
       const since = new Date(Date.now() - 30 * 86_400_000).toISOString().slice(0, 10);
       const { data } = await getSupabase()
-        .from("attendance_daily")
+        .from("hericilla_attendance_daily")
         .select("*")
         .eq("employee_id", profile!.id)
         .gte("work_date", since)
@@ -77,7 +77,7 @@ export default function StaffAttendancePage() {
     queryKey: ["my-corrections", profile?.id],
     queryFn: async () => {
       const { data } = await getSupabase()
-        .from("attendance_corrections")
+        .from("hericilla_attendance_corrections")
         .select("*")
         .eq("employee_id", profile!.id)
         .order("created_at", { ascending: false })
@@ -100,7 +100,7 @@ export default function StaffAttendancePage() {
   async function submitCorrection() {
     setBusy(true);
     setError(null);
-    const { error: err } = await getSupabase().from("attendance_corrections").insert({
+    const { error: err } = await getSupabase().from("hericilla_attendance_corrections").insert({
       employee_id: profile!.id,
       requested_by: profile!.id,
       work_date: wDate,

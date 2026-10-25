@@ -67,7 +67,7 @@ export default function StaffWorkspacePage() {
     queryKey: ["approvals-for-me", role],
     queryFn: async () => {
       const { data } = await getSupabase()
-        .from("approvals")
+        .from("hericilla_approvals")
         .select("*")
         .eq("status", "pending")
         .eq("required_role", role)
@@ -83,7 +83,7 @@ export default function StaffWorkspacePage() {
     queryKey: ["leave-pending", role],
     queryFn: async () => {
       const { data } = await getSupabase()
-        .from("leave_requests")
+        .from("hericilla_leave_requests")
         .select("*")
         .eq("status", "pending")
         .order("start_date", { ascending: true })
@@ -97,7 +97,7 @@ export default function StaffWorkspacePage() {
     queryKey: ["corrections-pending", role],
     queryFn: async () => {
       const { data } = await getSupabase()
-        .from("attendance_corrections")
+        .from("hericilla_attendance_corrections")
         .select("*")
         .eq("status", "pending")
         .order("created_at", { ascending: true })
@@ -111,7 +111,7 @@ export default function StaffWorkspacePage() {
     queryKey: ["expenses-pending", role],
     queryFn: async () => {
       const { data } = await getSupabase()
-        .from("expenses")
+        .from("hericilla_expenses")
         .select("*")
         .eq("status", "pending")
         .order("occurred_at", { ascending: true })
@@ -125,7 +125,7 @@ export default function StaffWorkspacePage() {
     queryKey: ["prs-open", role],
     queryFn: async () => {
       const { data } = await getSupabase()
-        .from("purchase_requests")
+        .from("hericilla_purchase_requests")
         .select("*")
         .in("status", ["submitted", "quoting", "pending_approval", "approved"])
         .order("created_at", { ascending: true })
@@ -139,7 +139,7 @@ export default function StaffWorkspacePage() {
     queryKey: ["jobs-open", role],
     queryFn: async () => {
       const { data } = await getSupabase()
-        .from("transport_jobs")
+        .from("hericilla_transport_jobs")
         .select("*")
         .not("status", "in", "('{delivered,verified,closed}')")
         .order("scheduled_at", { ascending: true })
@@ -153,8 +153,8 @@ export default function StaffWorkspacePage() {
     queryKey: ["reorder-alerts-view", role],
     queryFn: async () => {
       const { data } = await getSupabase()
-        .from("reorder_alerts")
-        .select("*, inventory_items(name)")
+        .from("hericilla_reorder_alerts")
+        .select("*, inventory_items:hericilla_inventory_items(name)")
         .order("alerted_at", { ascending: false })
         .limit(40);
       const pick = <T,>(v: unknown): T | null => (v == null ? null : Array.isArray(v) ? ((v[0] as T) ?? null) : (v as T));
@@ -170,14 +170,14 @@ export default function StaffWorkspacePage() {
     setBusyId(a.id);
     setError(null);
     const { error: err } = await getSupabase()
-      .from("approvals")
+      .from("hericilla_approvals")
       .update({ status: approved ? "approved" : "rejected", decided_by: profile!.id, decided_at: new Date().toISOString() })
       .eq("id", a.id);
     if (err) setError("Could not record your decision: " + err.message);
     // Keep the business row in step (purchase requests only — expenses and
     // corrections have their own decide buttons below).
     if (!err && a.entity_type === "purchase_request") {
-      await getSupabase().from("purchase_requests").update({ status: approved ? "approved" : "rejected" }).eq("id", a.entity_id);
+      await getSupabase().from("hericilla_purchase_requests").update({ status: approved ? "approved" : "rejected" }).eq("id", a.entity_id);
     }
     setBusyId(null);
     void qc.invalidateQueries({ queryKey: ["approvals-for-me", role] });
@@ -187,7 +187,7 @@ export default function StaffWorkspacePage() {
   async function decideLeave(id: string, approved: boolean) {
     setBusyId(id);
     const { error: err } = await getSupabase()
-      .from("leave_requests")
+      .from("hericilla_leave_requests")
       .update({ status: approved ? "approved" : "rejected", decided_by: profile!.id, decided_at: new Date().toISOString() })
       .eq("id", id);
     if (err) setError("Could not decide: " + err.message);
@@ -200,11 +200,11 @@ export default function StaffWorkspacePage() {
     const s = getSupabase();
     let err: { message: string } | null = null;
     if (approved) {
-      const r = await s.rpc("approve_attendance_correction", { c_id: c.id });
+      const r = await s.rpc("hericilla_approve_attendance_correction", { c_id: c.id });
       err = r.error;
     } else {
       const r = await s
-        .from("attendance_corrections")
+        .from("hericilla_attendance_corrections")
         .update({ status: "rejected", decided_by: profile!.id, decided_at: new Date().toISOString() })
         .eq("id", c.id);
       err = r.error;
@@ -217,7 +217,7 @@ export default function StaffWorkspacePage() {
   async function decideExpense(id: string, approved: boolean) {
     setBusyId(id);
     const { error: err } = await getSupabase()
-      .from("expenses")
+      .from("hericilla_expenses")
       .update({ status: approved ? "approved" : "rejected", approved_by: profile!.id, approved_at: new Date().toISOString() })
       .eq("id", id);
     if (err) setError("Could not decide: " + err.message);

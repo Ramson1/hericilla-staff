@@ -42,8 +42,8 @@ export default function StaffDashboard() {
     queryFn: async () => {
       if (!hasSupabaseEnv()) return [];
       const { data } = await getSupabase()
-        .from("shift_assignments")
-        .select("*, shift:shifts!shift_assignments_shift_id_fkey(name, start_time, end_time)")
+        .from("hericilla_shift_assignments")
+        .select("*, shift:hericilla_shifts!shift_assignments_shift_id_fkey(name, start_time, end_time)")
         .eq("employee_id", profile!.id)
         .eq("work_date", today);
       const pick = <T,>(v: unknown): T | null => (v == null ? null : Array.isArray(v) ? ((v[0] as T) ?? null) : (v as T));
@@ -61,7 +61,7 @@ export default function StaffDashboard() {
     queryKey: ["my-last-event", today],
     queryFn: async () => {
       const { data } = await getSupabase()
-        .from("attendance_events")
+        .from("hericilla_attendance_events")
         .select("event_type, event_time, geofence_result")
         .eq("employee_id", profile!.id)
         .gte("event_time", today + "T00:00:00+01:00")
@@ -76,7 +76,7 @@ export default function StaffDashboard() {
   const { data: announcements } = useQuery({
     queryKey: ["announcements"],
     queryFn: async () => {
-      const { data } = await getSupabase().from("announcements").select("*").order("created_at", { ascending: false }).limit(5);
+      const { data } = await getSupabase().from("hericilla_announcements").select("*").order("created_at", { ascending: false }).limit(5);
       return (data as { id: string; title: string; body: string; created_at: string }[]) ?? [];
     },
     enabled: !!profile,
@@ -127,7 +127,7 @@ export default function StaffDashboard() {
       setVerdict(v ? `Location check: ${statusLabel(v)}` : "Recorded.");
     } catch {
       // Fallback: call the clock_event RPC directly (no geofence verdict).
-      const { error: rpcErr } = await getSupabase().rpc("clock_event", {
+      const { error: rpcErr } = await getSupabase().rpc("hericilla_clock_event", {
         p_type: type,
         p_work_order: body.work_order_id,
         p_site: body.site_id,

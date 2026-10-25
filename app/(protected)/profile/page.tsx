@@ -50,7 +50,7 @@ export default function StaffProfilePage() {
     queryKey: ["my-staff-details", profile?.id],
     queryFn: async () => {
       const { data } = await getSupabase()
-        .from("staff_details")
+        .from("hericilla_staff_details")
         .select("*")
         .eq("profile_id", profile!.id)
         .maybeSingle();
@@ -72,7 +72,7 @@ export default function StaffProfilePage() {
     queryKey: ["my-certs", profile?.id],
     queryFn: async () => {
       const { data } = await getSupabase()
-        .from("staff_certifications")
+        .from("hericilla_staff_certifications")
         .select("*")
         .eq("profile_id", profile!.id)
         .order("expiry_date", { ascending: true, nullsFirst: false });
@@ -87,7 +87,7 @@ export default function StaffProfilePage() {
     queryKey: ["my-documents", profile?.id],
     queryFn: async () => {
       const { data } = await getSupabase()
-        .from("documents")
+        .from("hericilla_documents")
         .select("id, title, doc_type, file_path, storage_bucket, created_at")
         .eq("profile_id", profile!.id)
         .order("created_at", { ascending: false })
@@ -109,7 +109,7 @@ export default function StaffProfilePage() {
   async function openDoc(path: string | null, bucket: string | null) {
     if (!path) return;
     setError(null);
-    const { data, error: err } = await getSupabase().storage.from(bucket ?? "documents").createSignedUrl(path, 600);
+    const { data, error: err } = await getSupabase().storage.from(bucket ?? "hericilla-documents").createSignedUrl(path, 600);
     if (err || !data?.signedUrl) {
       setError("That file could not be opened: " + (err?.message ?? "no link returned"));
       return;
@@ -121,7 +121,7 @@ export default function StaffProfilePage() {
     queryKey: ["my-dept", profile?.department_id],
     queryFn: async () => {
       if (!profile?.department_id) return null;
-      const { data } = await getSupabase().from("departments").select("name").eq("id", profile.department_id).maybeSingle();
+      const { data } = await getSupabase().from("hericilla_departments").select("name").eq("id", profile.department_id).maybeSingle();
       return (data as { name: string } | null) ?? null;
     },
     enabled: !!profile?.department_id,
@@ -137,7 +137,7 @@ export default function StaffProfilePage() {
     setBusy(true);
     setError(null);
     const { error: err } = await getSupabase()
-      .from("profiles")
+      .from("hericilla_profiles")
       .update({ phone: effPhone.trim() || null, home_base: effBase.trim() || null })
       .eq("id", profile!.id);
     setBusy(false);
@@ -163,7 +163,7 @@ export default function StaffProfilePage() {
       updated_at: new Date().toISOString(),
     };
     // staff_details PK is profile_id — upsert works whether the row exists or not.
-    const { error: err } = await getSupabase().from("staff_details").upsert(payload, { onConflict: "profile_id" });
+    const { error: err } = await getSupabase().from("hericilla_staff_details").upsert(payload, { onConflict: "profile_id" });
     setBusy(false);
     if (err) {
       setError("Could not save: " + err.message);
@@ -184,7 +184,7 @@ export default function StaffProfilePage() {
 
   async function addCert() {
     setBusy(true);
-    const { error: err } = await getSupabase().from("staff_certifications").insert({
+    const { error: err } = await getSupabase().from("hericilla_staff_certifications").insert({
       profile_id: profile!.id,
       name: cName.trim(),
       issued_by: cIssuer.trim() || null,
@@ -200,7 +200,7 @@ export default function StaffProfilePage() {
   }
 
   async function deleteCert(c: Cert) {
-    const { error: err } = await getSupabase().from("staff_certifications").delete().eq("id", c.id);
+    const { error: err } = await getSupabase().from("hericilla_staff_certifications").delete().eq("id", c.id);
     setDeleting(null);
     if (err) setError("Could not delete: " + err.message);
     void qc.invalidateQueries({ queryKey: ["my-certs", profile?.id] });

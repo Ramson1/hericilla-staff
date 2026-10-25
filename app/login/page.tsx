@@ -23,7 +23,7 @@ export default function LoginPage() {
       const { data, error: signErr } = await s.auth.signInWithPassword({ email, password });
       if (signErr) throw signErr;
       const { data: profile } = await s
-        .from("profiles")
+        .from("hericilla_profiles")
         .select("role, status")
         .eq("id", data.user!.id)
         .maybeSingle();

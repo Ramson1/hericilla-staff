@@ -47,7 +47,7 @@ export default function StaffLeavePage() {
     queryKey: ["my-leave", profile?.id],
     queryFn: async () => {
       const { data } = await getSupabase()
-        .from("leave_requests")
+        .from("hericilla_leave_requests")
         .select("*")
         .eq("employee_id", profile!.id)
         .order("created_at", { ascending: false })
@@ -67,7 +67,7 @@ export default function StaffLeavePage() {
     }
     setBusy(true);
     setError(null);
-    const { error: err } = await getSupabase().from("leave_requests").insert({
+    const { error: err } = await getSupabase().from("hericilla_leave_requests").insert({
       employee_id: profile!.id,
       requested_by: profile!.id,
       leave_type: type,

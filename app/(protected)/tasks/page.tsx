@@ -41,7 +41,7 @@ export default function StaffTasksPage() {
     queryKey: ["my-tasks", profile?.id],
     queryFn: async () => {
       const { data } = await getSupabase()
-        .from("tasks")
+        .from("hericilla_tasks")
         .select("*")
         .eq("assigned_to", profile!.id)
         .order("due_date", { ascending: true, nullsFirst: false })
@@ -58,7 +58,7 @@ export default function StaffTasksPage() {
     queryKey: ["supervisors-near", profile?.department_id],
     queryFn: async () => {
       const { data } = await getSupabase()
-        .from("profiles")
+        .from("hericilla_profiles")
         .select("id, full_name, role")
         .eq("role", "supervisor")
         .eq("status", "active")
@@ -72,7 +72,7 @@ export default function StaffTasksPage() {
     setBusy(true);
     setError(null);
     const { error: err } = await getSupabase()
-      .from("tasks")
+      .from("hericilla_tasks")
       .update({ status, updated_at: new Date().toISOString() })
       .eq("id", task.id);
     setBusy(false);
@@ -86,7 +86,7 @@ export default function StaffTasksPage() {
     const patch: Record<string, unknown> = { updated_at: new Date().toISOString() };
     if (note !== (editing.progress_note ?? "")) patch.progress_note = note;
     if (status) patch.status = status;
-    const { error: err } = await getSupabase().from("tasks").update(patch).eq("id", editing.id);
+    const { error: err } = await getSupabase().from("hericilla_tasks").update(patch).eq("id", editing.id);
     setBusy(false);
     if (err) {
       setError("Could not save: " + err.message);
@@ -101,7 +101,7 @@ export default function StaffTasksPage() {
     if (!sup) return;
     setBusy(true);
     const { error: err } = await getSupabase()
-      .from("tasks")
+      .from("hericilla_tasks")
       .update({ escalated_to: sup.id, status: "blocked", updated_at: new Date().toISOString() })
       .eq("id", task.id);
     setBusy(false);
