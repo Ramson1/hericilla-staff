@@ -153,7 +153,7 @@ export default function StaffAttendancePage() {
               onChange={(e) => setWEventType(e.target.value as "clock_in" | "clock_out")}
             />
           )}
-          <p className="text-lg text-ink-soft">
+          <p className="text-base text-ink-soft">
             Enter the time it should show: <strong>{statusLabel(effectiveEventType)}</strong> on your timesheet.
           </p>
           <BigInput
@@ -178,7 +178,7 @@ export default function StaffAttendancePage() {
             onChange={(e) => setWReason(e.target.value)}
             rows={4}
           />
-          {error && <p className="text-lg font-semibold text-danger-800">{error}</p>}
+          {error && <p className="text-base font-semibold text-danger-800">{error}</p>}
         </div>
       ),
       valid: wReason.trim().length >= 5,
@@ -205,7 +205,7 @@ export default function StaffAttendancePage() {
       />
 
       <section className="mt-8">
-        <h2 className="text-xl font-bold text-brand-950 mb-3">Last 30 days</h2>
+        <h2 className="text-lg font-bold text-brand-950 mb-3">Last 30 days</h2>
         {isPending ? (
           <div className="space-y-3">
             <Skeleton className="h-20" />
@@ -240,9 +240,9 @@ export default function StaffAttendancePage() {
       </section>
 
       <section className="mt-10">
-        <h2 className="text-xl font-bold text-brand-950 mb-3">My correction requests</h2>
+        <h2 className="text-lg font-bold text-brand-950 mb-3">My correction requests</h2>
         {(corrections ?? []).length === 0 ? (
-          <p className="text-lg text-ink-soft">You have not asked for any corrections. That is a good thing.</p>
+          <p className="text-base text-ink-soft">You have not asked for any corrections. That is a good thing.</p>
         ) : (
           <div className="space-y-3">
             {(corrections ?? []).map((c) => (

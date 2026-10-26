@@ -30,7 +30,7 @@ export function StaffShell({ children }: { children: React.ReactNode }) {
         <div className="mx-auto max-w-4xl px-4 py-3 flex items-center gap-3">
           <Image src="/logo.png" alt="" width={44} height={44} className="rounded-xl" />
           <div className="flex-1 min-w-0">
-            <p className="text-xl font-extrabold text-brand-950 leading-tight">Hericilla Staff</p>
+            <p className="text-lg font-extrabold text-brand-950 leading-tight">Hericilla Staff</p>
             <p className="text-base text-ink-soft truncate">Hello, {profile?.full_name?.split(" ")[0] ?? "there"}</p>
           </div>
           <Link
@@ -58,7 +58,7 @@ export function StaffShell({ children }: { children: React.ReactNode }) {
             <Link
               key={n.href}
               href={n.href}
-              className={`inline-flex items-center gap-2 rounded-[var(--radius-btn)] px-4 py-3 text-lg font-bold ${
+              className={`inline-flex items-center gap-2 rounded-[var(--radius-btn)] px-4 py-3 text-base font-bold ${
                 isActive(n.href) ? "bg-brand-700 text-white" : "bg-brand-50 text-brand-900 hover:bg-brand-100"
               }`}
             >

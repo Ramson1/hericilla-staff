@@ -54,8 +54,8 @@ export default function LoginPage() {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <Card className="max-w-lg text-center p-10">
-          <h1 className="text-2xl font-bold text-brand-950">Almost there — one setup step</h1>
-          <p className="mt-4 text-lg text-ink-soft">
+          <h1 className="text-xl font-bold text-brand-950">Almost there — one setup step</h1>
+          <p className="mt-4 text-base text-ink-soft">
             The staff portal needs your Supabase project keys before anyone can sign in. Copy{" "}
             <code className="bg-brand-50 px-2 rounded">.env.example</code> to{" "}
             <code className="bg-brand-50 px-2 rounded">.env.local</code> in <strong>apps/staff-portal</strong>, paste the
@@ -71,12 +71,12 @@ export default function LoginPage() {
       {/* Brand panel — big screens only */}
       <aside className="hidden flex-col justify-between bg-gradient-to-br from-brand-950 via-brand-900 to-brand-700 p-12 text-white lg:flex">
         <div className="flex items-center gap-3">
-          <Image src="/logo.png" alt="" width={56} height={56} className="rounded-xl bg-white/10" />
-          <span className="text-xl font-bold tracking-wide">Hericilla Support Services Ltd</span>
+          <Image src="/logo.png" alt="" width={56} height={56} className="rounded-xl bg-white p-1" />
+          <span className="text-lg font-bold tracking-wide">Hericilla Support Services Ltd</span>
         </div>
         <div>
           <h2 className="text-4xl font-extrabold leading-tight">Staff Portal</h2>
-          <p className="mt-4 max-w-md text-lg text-brand-200">
+          <p className="mt-4 max-w-md text-base text-brand-200">
             Job cards, trip reports, quotations and approvals — your day’s work, organised and documented in one
             place.
           </p>
@@ -89,9 +89,9 @@ export default function LoginPage() {
       <main className="flex min-h-screen items-center justify-center p-4 sm:p-8">
         <Card className="w-full max-w-md p-8 sm:p-10">
           <div className="flex items-center gap-3">
-            <Image src="/logo.png" alt="" width={52} height={52} className="rounded-xl" />
+            <Image src="/logo.png" alt="" width={52} height={52} className="rounded-xl bg-white p-1 ring-1 ring-line" />
             <div>
-              <h1 className="text-2xl font-extrabold text-brand-950">Welcome back</h1>
+              <h1 className="text-xl font-extrabold text-brand-950">Welcome back</h1>
               <p className="text-base text-ink-soft">Sign in to the Hericilla Staff portal</p>
             </div>
           </div>
@@ -123,7 +123,15 @@ export default function LoginPage() {
               {busy ? "Signing in…" : "Sign in"}
             </BigButton>
             <p className="text-base text-ink-soft text-center">
-              Forgot your password? Ask your supervisor or HR to reset it for you.
+              Forgot your password?{" "}
+              <button
+                type="button"
+                onClick={() => router.push("/auth/reset-password")}
+                className="font-semibold text-brand-700 underline hover:text-brand-800"
+              >
+                Send yourself a reset link
+              </button>
+              .
             </p>
           </form>
         </Card>

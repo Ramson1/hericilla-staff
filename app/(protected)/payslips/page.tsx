@@ -92,7 +92,7 @@ export default function StaffPayslipsPage() {
             return (
               <Card key={p.id} className="p-5">
                 <div className="flex items-center justify-between gap-3 flex-wrap">
-                  <h2 className="text-xl font-bold text-brand-950">{month}</h2>
+                  <h2 className="text-lg font-bold text-brand-950">{month}</h2>
                   <span className="flex gap-2 items-center flex-wrap">
                     <StatusBadge status={p.payment_status} />
                     {p.payment_status === "paid" && p.paid_at && (
@@ -100,8 +100,8 @@ export default function StaffPayslipsPage() {
                     )}
                   </span>
                 </div>
-                <p className="mt-1 text-lg text-success-800 font-bold">Take home: {naira(p.net)}</p>
-                <dl className="mt-4 grid gap-x-8 gap-y-2 sm:grid-cols-2 text-lg">
+                <p className="mt-1 text-base text-success-800 font-bold">Take home: {naira(p.net)}</p>
+                <dl className="mt-4 grid gap-x-8 gap-y-2 sm:grid-cols-2 text-base">
                   <div className="flex justify-between gap-4 border-b border-[var(--color-line)] pb-1">
                     <dt className="text-ink-soft">Base salary</dt>
                     <dd className="font-semibold">{naira(p.base_salary)}</dd>

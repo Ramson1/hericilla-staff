@@ -162,14 +162,14 @@ export default function StaffDashboard() {
 
       {/* Clock card — the one big action */}
       <Card className="mt-6">
-        <h2 className="text-xl font-bold text-brand-950">
+        <h2 className="text-lg font-bold text-brand-950">
           {nextAction === "clock_in"
             ? "Ready to start? Clock in below."
             : nextAction === "clock_out"
               ? "You are clocked in. Clock out when you finish."
               : "You are on break. End it when you are back."}
         </h2>
-        <p className="text-lg text-ink-soft mt-1">
+        <p className="text-base text-ink-soft mt-1">
           {lastEvent
             ? `Last action: ${statusLabel(lastEvent.event_type)} at ${new Date(lastEvent.event_time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`
             : "Nothing recorded yet today."}
@@ -177,7 +177,7 @@ export default function StaffDashboard() {
 
         {(assignments ?? []).length > 1 && nextAction === "clock_in" && (
           <div className="mt-4">
-            <p className="text-lg font-semibold">Which job are you starting on?</p>
+            <p className="text-base font-semibold">Which job are you starting on?</p>
             <div className="mt-2 flex gap-3 flex-wrap">
               {(assignments ?? []).map((a) => (
                 <BigButton
@@ -193,13 +193,13 @@ export default function StaffDashboard() {
           </div>
         )}
         {(assignments ?? []).length === 1 && (
-          <p className="mt-3 text-lg">
+          <p className="mt-3 text-base">
             Today’s shift: <strong>{assignments![0].shift_name ?? "assigned shift"}</strong>
             {assignments![0].start_time ? ` (${assignments![0].start_time!.slice(0, 5)} – ${assignments![0].end_time?.slice(0, 5)})` : ""}
           </p>
         )}
         {(assignments ?? []).length === 0 && (
-          <p className="mt-3 text-lg text-warning-800">You have no shift assigned for today. You can still clock in — it will be recorded without a shift.</p>
+          <p className="mt-3 text-base text-warning-800">You have no shift assigned for today. You can still clock in — it will be recorded without a shift.</p>
         )}
 
         <div className="mt-6 flex flex-wrap gap-4">
@@ -225,8 +225,8 @@ export default function StaffDashboard() {
           )}
         </div>
 
-        {verdict && <p className="mt-4 text-lg font-semibold text-success-800">✓ {verdict}</p>}
-        {error && <p className="mt-4 text-lg font-semibold text-danger-800">{error}</p>}
+        {verdict && <p className="mt-4 text-base font-semibold text-success-800">✓ {verdict}</p>}
+        {error && <p className="mt-4 text-base font-semibold text-danger-800">{error}</p>}
         <p className="mt-4 text-base text-ink-soft">
           We ask for your location when you clock, to confirm you reached the site. It is stored only with that clock record.
         </p>
@@ -234,16 +234,16 @@ export default function StaffDashboard() {
 
       {/* Quick links */}
       <div className="mt-6 flex gap-4 flex-wrap">
-        <Link href="/attendance" className="text-lg font-bold text-brand-800 underline">My timesheet</Link>
-        <Link href="/tasks" className="text-lg font-bold text-brand-800 underline">My tasks</Link>
-        <Link href="/workspace" className="text-lg font-bold text-brand-800 underline">My work queue</Link>
-        <Link href="/leave" className="text-lg font-bold text-brand-800 underline">Ask for leave</Link>
-        <Link href="/payslips" className="text-lg font-bold text-brand-800 underline">My payslips</Link>
+        <Link href="/attendance" className="text-base font-bold text-brand-800 underline">My timesheet</Link>
+        <Link href="/tasks" className="text-base font-bold text-brand-800 underline">My tasks</Link>
+        <Link href="/workspace" className="text-base font-bold text-brand-800 underline">My work queue</Link>
+        <Link href="/leave" className="text-base font-bold text-brand-800 underline">Ask for leave</Link>
+        <Link href="/payslips" className="text-base font-bold text-brand-800 underline">My payslips</Link>
       </div>
 
       {/* Announcements */}
       <section className="mt-10">
-        <h2 className="text-xl font-bold text-brand-950 mb-3">Announcements</h2>
+        <h2 className="text-lg font-bold text-brand-950 mb-3">Announcements</h2>
         {(announcements ?? []).length === 0 ? (
           <EmptyState title="Nothing announced yet" teach="When the office sends a message to all staff, it appears here." />
         ) : (

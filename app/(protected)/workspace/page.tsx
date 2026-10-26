@@ -433,8 +433,8 @@ export default function StaffWorkspacePage() {
       ) : nothingYet ? (
         <div className="mt-6">
           <Card className="text-center p-10">
-            <p className="text-xl font-bold text-success-800">✓ Nothing is waiting on you</p>
-            <p className="mt-2 text-lg text-ink-soft">
+            <p className="text-lg font-bold text-success-800">✓ Nothing is waiting on you</p>
+            <p className="mt-2 text-base text-ink-soft">
               New items appear here the moment your department has something to do — you will also get an alert in the bell.
             </p>
           </Card>
@@ -442,11 +442,11 @@ export default function StaffWorkspacePage() {
       ) : (
         sections.map((s) => (
           <section key={s.title} className="mt-10">
-            <h2 className="text-xl font-bold text-brand-950">{s.title}</h2>
-            <p className="mt-1 text-lg text-ink-soft">{s.purpose}</p>
+            <h2 className="text-lg font-bold text-brand-950">{s.title}</h2>
+            <p className="mt-1 text-base text-ink-soft">{s.purpose}</p>
             <div className="mt-3 space-y-3">
               {s.rows.length === 0 ? (
-                <p className="text-lg text-ink-soft">{s.empty}</p>
+                <p className="text-base text-ink-soft">{s.empty}</p>
               ) : (
                 s.rows.map((r, i) => <div key={i}>{r}</div>)
               )}

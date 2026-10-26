@@ -93,7 +93,7 @@ export default function StaffLeavePage() {
       />
 
       <Card className="mt-6">
-        <h2 className="text-xl font-bold text-brand-950">Request leave</h2>
+        <h2 className="text-lg font-bold text-brand-950">Request leave</h2>
         <form className="mt-4 space-y-5" onSubmit={submit}>
           <BigSelect label="Type of leave" options={LEAVE_OPTIONS} value={type} onChange={(e) => setType(e.target.value)} />
           <div className="grid gap-4 sm:grid-cols-2">
@@ -129,7 +129,7 @@ export default function StaffLeavePage() {
       </Card>
 
       <section className="mt-10">
-        <h2 className="text-xl font-bold text-brand-950 mb-3">My requests</h2>
+        <h2 className="text-lg font-bold text-brand-950 mb-3">My requests</h2>
         {isPending ? (
           <div className="space-y-3">
             <Skeleton className="h-20" />

@@ -127,7 +127,7 @@ export default function StaffTasksPage() {
         ]}
       />
 
-      {error && <p className="mt-4 text-lg font-semibold text-danger-800">{error}</p>}
+      {error && <p className="mt-4 text-base font-semibold text-danger-800">{error}</p>}
 
       {isPending ? (
         <div className="mt-6 space-y-3">
@@ -197,7 +197,7 @@ export default function StaffTasksPage() {
 
           {doneTasks.length > 0 && (
             <section className="mt-10">
-              <h2 className="text-xl font-bold text-brand-950 mb-3">Recently finished</h2>
+              <h2 className="text-lg font-bold text-brand-950 mb-3">Recently finished</h2>
               <div className="space-y-3">
                 {doneTasks.map((t) => (
                   <RowCard key={t.id} title={t.title} subtitle={t.description ?? undefined} badge={<StatusBadge status="done" />} />

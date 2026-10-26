@@ -19,8 +19,8 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <Card className="max-w-lg text-center p-10">
-          <h1 className="text-2xl font-bold text-brand-950">Supabase is not connected yet</h1>
-          <p className="mt-4 text-lg text-ink-soft">
+          <h1 className="text-xl font-bold text-brand-950">Supabase is not connected yet</h1>
+          <p className="mt-4 text-base text-ink-soft">
             Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in apps/staff-portal/.env.local, then restart the dev server.
           </p>
         </Card>
@@ -40,8 +40,8 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <Card className="max-w-lg text-center p-10">
-          <h1 className="text-2xl font-bold text-brand-950">Wrong door for this account</h1>
-          <p className="mt-4 text-lg text-ink-soft">{blockedReason}</p>
+          <h1 className="text-xl font-bold text-brand-950">Wrong door for this account</h1>
+          <p className="mt-4 text-base text-ink-soft">{blockedReason}</p>
           <BigButton className="mt-6" variant="secondary" onClick={() => void signOut()}>
             Sign out
           </BigButton>

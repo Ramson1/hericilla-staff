@@ -222,8 +222,8 @@ export default function StaffProfilePage() {
 
       {/* Identity (read-only) */}
       <Card className="mt-6 p-5">
-        <h2 className="text-xl font-bold text-brand-950">Who you are</h2>
-        <dl className="mt-3 grid gap-x-8 gap-y-2 sm:grid-cols-2 text-lg">
+        <h2 className="text-lg font-bold text-brand-950">Who you are</h2>
+        <dl className="mt-3 grid gap-x-8 gap-y-2 sm:grid-cols-2 text-base">
           <div className="flex justify-between gap-4 border-b border-[var(--color-line)] pb-1">
             <dt className="text-ink-soft">Full name</dt>
             <dd className="font-semibold">{profile?.full_name}</dd>
@@ -256,7 +256,7 @@ export default function StaffProfilePage() {
 
       {/* Contact (editable) */}
       <Card className="mt-6 p-5">
-        <h2 className="text-xl font-bold text-brand-950">Contact details</h2>
+        <h2 className="text-lg font-bold text-brand-950">Contact details</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           <BigInput
             label="Phone number"
@@ -285,7 +285,7 @@ export default function StaffProfilePage() {
 
       {/* Bank / payroll */}
       <Card className="mt-6 p-5">
-        <h2 className="text-xl font-bold text-brand-950">Bank & payroll details</h2>
+        <h2 className="text-lg font-bold text-brand-950">Bank & payroll details</h2>
         {sdPending ? (
           <Skeleton className="mt-4 h-32" />
         ) : (
@@ -339,12 +339,12 @@ export default function StaffProfilePage() {
       {/* Certifications */}
       <section className="mt-10">
         <div className="flex items-center justify-between gap-3">
-          <h2 className="text-xl font-bold text-brand-950">My licences & certificates</h2>
+          <h2 className="text-lg font-bold text-brand-950">My licences & certificates</h2>
           <BigButton size="md" variant="secondary" onClick={() => setCertOpen(true)}>
             + Add certificate
           </BigButton>
         </div>
-        <p className="mt-1 text-lg text-ink-soft">Safety cards, licences, training certificates — with their expiry dates.</p>
+        <p className="mt-1 text-base text-ink-soft">Safety cards, licences, training certificates — with their expiry dates.</p>
         {(certs ?? []).length === 0 ? (
           <div className="mt-4">
             <EmptyState title="No certificates recorded" teach="Add your safety cards and licences here so you get a reminder before they expire." />
@@ -410,10 +410,10 @@ export default function StaffProfilePage() {
 
       {/* Documents addressed to me */}
       <section className="mt-10">
-        <h2 className="text-xl font-bold text-brand-950">My documents</h2>
-        <p className="mt-1 text-lg text-ink-soft">Letters and files the office has put in your name — your contract, notices, certificates.</p>
+        <h2 className="text-lg font-bold text-brand-950">My documents</h2>
+        <p className="mt-1 text-base text-ink-soft">Letters and files the office has put in your name — your contract, notices, certificates.</p>
         {(myDocs ?? []).length === 0 ? (
-          <p className="mt-3 text-lg text-ink-soft">Nothing has been filed under your name yet.</p>
+          <p className="mt-3 text-base text-ink-soft">Nothing has been filed under your name yet.</p>
         ) : (
           <div className="mt-4 space-y-3">
             {(myDocs ?? []).map((d) => (
@@ -434,25 +434,25 @@ export default function StaffProfilePage() {
 
       {/* Help & policies */}
       <section className="mt-10">
-        <h2 className="text-xl font-bold text-brand-950">Help & policies</h2>
+        <h2 className="text-lg font-bold text-brand-950">Help & policies</h2>
         <Card className="mt-3 p-5 space-y-4">
           <div>
-            <h3 className="text-lg font-bold text-brand-950">Why do you ask for my location when I clock in?</h3>
-            <p className="mt-1 text-lg text-ink-soft">
+            <h3 className="text-base font-bold text-brand-950">Why do you ask for my location when I clock in?</h3>
+            <p className="mt-1 text-base text-ink-soft">
               Only the coordinates of the clock moment are stored, next to that record, so your supervisor can confirm you reached the site. We do not
               track you between clock-ins. If you decline the location request, the clock-in is still recorded — marked “location unchecked”.
             </p>
           </div>
           <div>
-            <h3 className="text-lg font-bold text-brand-950">I clocked in but the time is wrong</h3>
-            <p className="mt-1 text-lg text-ink-soft">
+            <h3 className="text-base font-bold text-brand-950">I clocked in but the time is wrong</h3>
+            <p className="mt-1 text-base text-ink-soft">
               Open <strong>My Time</strong> and press <strong>Request a correction</strong>. Fill the three short steps and send it. Your supervisor
               answers, and the fixed time appears on your timesheet.
             </p>
           </div>
           <div>
-            <h3 className="text-lg font-bold text-brand-950">Who do I call?</h3>
-            <p className="mt-1 text-lg text-ink-soft">
+            <h3 className="text-base font-bold text-brand-950">Who do I call?</h3>
+            <p className="mt-1 text-base text-ink-soft">
               Your supervisor first. For pay, leave or bank questions call HR. The office line and the Abuloma address are on your contract — you can
               also ask for them here if they are missing.
             </p>
