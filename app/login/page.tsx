@@ -4,11 +4,13 @@ import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { BigButton, BigInput, BigPasswordInput, Card } from "@hericilla/ui";
-import { getSupabase, hasSupabaseEnv } from "@hericilla/supabase-clients";
+import { hasSupabaseEnv } from "@hericilla/supabase-clients";
 import { STAFF_ROLES } from "@hericilla/types";
+import { useAuth } from "@/lib/auth";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { login, signOut } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -18,36 +20,36 @@ export default function LoginPage() {
     e.preventDefault();
     setError(null);
     setBusy(true);
-    try {
-      const s = getSupabase();
-      const { data, error: signErr } = await s.auth.signInWithPassword({ email, password });
-      if (signErr) throw signErr;
-      const { data: profile } = await s
-        .from("hericilla_profiles")
-        .select("role, status")
-        .eq("id", data.user!.id)
-        .maybeSingle();
-      if (!profile) {
-        await s.auth.signOut();
-        throw new Error("This account has no staff profile yet. Ask an administrator to complete your setup.");
-      }
-      if (profile.status !== "active") {
-        await s.auth.signOut();
-        throw new Error("This account is inactive. Ask an administrator to reactivate it.");
-      }
-      if (profile.role === "driver") {
-        await s.auth.signOut();
-        throw new Error("Drivers use the Hericilla Driver app on the phone — open it there to sign in.");
-      }
-      if (!STAFF_ROLES.includes(profile.role as (typeof STAFF_ROLES)[number])) {
-        await s.auth.signOut();
-        throw new Error("This account signs into the admin portal. Use the admin portal address instead.");
-      }
-      router.replace("/");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not sign in. Please try again.");
+    const r = await login(email, password);
+    if (!r.ok) {
+      setError(r.error ?? "Could not sign in. Please try again.");
       setBusy(false);
+      return;
     }
+    const profile = r.profile;
+    if (!profile) {
+      await signOut();
+      setError("This account has no staff profile yet. Ask an administrator to complete your setup.");
+      setBusy(false);
+      return;
+    }
+    if (profile.role === "driver") {
+      await signOut();
+      setError("Drivers use the Hericilla Driver app on the phone — open it there to sign in.");
+      setBusy(false);
+      return;
+    }
+    if (!STAFF_ROLES.includes(profile.role)) {
+      await signOut();
+      setError("This account signs into the admin portal. Use the admin portal address instead.");
+      setBusy(false);
+      return;
+    }
+    if (r.mustReset) {
+      router.replace("/auth/change-password");
+      return;
+    }
+    router.replace("/");
   }
 
   if (!hasSupabaseEnv()) {

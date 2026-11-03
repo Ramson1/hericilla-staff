@@ -121,7 +121,7 @@ export function StaffShell({ children }: { children: React.ReactNode }) {
             <Image src="/blackboxtech.jpg" alt="Black-Box Tech logo" width={24} height={24} className="h-6 w-6 rounded-full" />
             {!collapsed && (
               <span>
-                Designed and Developed by <strong className="font-bold">Black-Box Tech</strong>, and Ayo Ogundipe.
+                Designed and Developed by <strong className="font-bold">Black-Box Tech</strong> and Ayo Ogundipe.
               </span>
             )}
           </a>
