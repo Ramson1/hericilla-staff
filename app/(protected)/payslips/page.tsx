@@ -44,7 +44,7 @@ export default function StaffPayslipsPage() {
     queryFn: async () => {
       const { data } = await getSupabase()
         .from("hericilla_payslips")
-        .select("*, run:hericilla_payroll_runs!payslips_payroll_run_id_fkey(period_month)")
+        .select("*, run:hericilla_payroll_runs!hericilla_payslips_payroll_run_id_fkey(period_month)")
         .eq("employee_id", profile!.id)
         .order("created_at", { ascending: false })
         .limit(24);

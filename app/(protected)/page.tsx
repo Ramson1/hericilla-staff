@@ -43,7 +43,7 @@ export default function StaffDashboard() {
       if (!hasSupabaseEnv()) return [];
       const { data } = await getSupabase()
         .from("hericilla_shift_assignments")
-        .select("*, shift:hericilla_shifts!shift_assignments_shift_id_fkey(name, start_time, end_time)")
+        .select("*, shift:hericilla_shifts!hericilla_shift_assignments_shift_id_fkey(name, start_time, end_time)")
         .eq("employee_id", profile!.id)
         .eq("work_date", today);
       const pick = <T,>(v: unknown): T | null => (v == null ? null : Array.isArray(v) ? ((v[0] as T) ?? null) : (v as T));

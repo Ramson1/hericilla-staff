@@ -62,6 +62,7 @@ export default function StaffTasksPage() {
         .select("id, full_name, role")
         .eq("role", "supervisor")
         .eq("status", "active")
+        .eq("is_system", false)
         .limit(5);
       return (data as { id: string; full_name: string }[]) ?? [];
     },
